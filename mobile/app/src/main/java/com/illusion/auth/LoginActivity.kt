@@ -2,6 +2,7 @@ package com.illusion.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.illusion.utils.SessionManager
 import com.illusion.network.ApiService
 import com.illusion.network.LoginRequest
 import com.illusion.network.LoginResponse
+import com.illusion.network.UserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,8 +27,8 @@ class LoginActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
-        // If user is already logged in, navigate to ProductListActivity
-        if (sessionManager.isLoggedIn()) {
+        // If a valid session exists, navigate to the ProductListActivity
+        if (sessionManager.isLoggedIn() && !sessionManager.getUsername().isNullOrBlank()) {
             navigateToProductList()
             return
         }
@@ -51,9 +53,26 @@ class LoginActivity : AppCompatActivity() {
             ApiService.instance.login(loginRequest).enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     if (response.isSuccessful) {
-                        val username = response.body()?.username ?: "Unknown User"
-                        sessionManager.saveUserSession(username)
-                        navigateToProductList()
+                        val accessToken = response.body()?.access_token ?: ""
+                        sessionManager.saveToken(accessToken)
+
+                        // Fetch user details
+                        ApiService.instance.getUserDetails("Bearer $accessToken").enqueue(object : Callback<UserResponse> {
+                            override fun onResponse(call: Call<UserResponse>, userResponse: Response<UserResponse>) {
+                                Log.d("TAG", accessToken)
+                                if (userResponse.isSuccessful) {
+                                    val username = userResponse.body()?.username ?: "Unknown User"
+                                    sessionManager.saveUserSession(username)
+                                    navigateToProductList()
+                                } else {
+                                    Toast.makeText(this@LoginActivity, "Failed to fetch user details", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                                Toast.makeText(this@LoginActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        })
                     } else {
                         Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
                     }

@@ -10,6 +10,7 @@ class SessionManager(context: Context) {
     companion object {
         private const val KEY_USERNAME = "username"
         private const val KEY_IS_LOGGED_IN = "is_logged_in"
+        private const val KEY_TOKEN = "access_token"
     }
 
     fun saveUserSession(username: String) {
@@ -18,6 +19,14 @@ class SessionManager(context: Context) {
             putBoolean(KEY_IS_LOGGED_IN, true)
             apply()
         }
+    }
+
+    fun saveToken(token: String) {
+        prefs.edit().putString(KEY_TOKEN, token).apply()
+    }
+
+    fun getToken(): String? {
+        return prefs.getString(KEY_TOKEN, null)
     }
 
     fun getUsername(): String? {
