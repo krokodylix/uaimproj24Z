@@ -24,4 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Logout" />
+
+    <Button
+        android:id="@+id/addProductButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Product"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+
 </LinearLayout>

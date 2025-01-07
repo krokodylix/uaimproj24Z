@@ -41,5 +41,10 @@ interface ApiServiceInterface {
     @GET("/user")
     fun getUserDetails(@Header("Authorization") token: String): Call<UserResponse>
 
+    @POST("/product")
+    fun addProduct(
+        @Header("Authorization") token: String,
+        @Body product: Product
+    ): Call<Void>
 
 }

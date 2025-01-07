@@ -16,6 +16,7 @@ from db_models import db, User, Product, TransportType, Order, Province
 
 load_dotenv()
 
+
 def create_app(test_config=None):
     app = Flask(__name__)
 
@@ -147,7 +148,8 @@ def create_app(test_config=None):
         return jsonify({
             "id": user.id,
             "username": user.username,
-            "email": user.email
+            "email": user.email,
+            "is_admin": user.is_admin
         }), 200
 
     # --------------------- PRODUKTY ---------------------
@@ -484,7 +486,7 @@ def create_app(test_config=None):
         """
         current_user_id = get_jwt_identity()
         orders = Order.query.filter_by(user_id=current_user_id).all()
-        
+
         result = []
         for order in orders:
             product = Product.query.get(order.product_id)
@@ -497,7 +499,7 @@ def create_app(test_config=None):
                 "transport_type": order.transport_type.value,
                 "province": order.province.value
             })
-        
+
         return jsonify(result), 200
 
     # --------------------- USUŃ PRODUKT ---------------------
