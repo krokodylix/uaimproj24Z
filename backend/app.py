@@ -132,6 +132,24 @@ def create_app(test_config=None):
         access_token = create_access_token(identity=user.id)
         return jsonify({"access_token": access_token}), 200
 
+    # --------------------- DANE UŻYTKOWNIKA ---------------------
+    @app.route('/user', methods=['GET'])
+    @jwt_required()
+    def get_user():
+        """
+        Retrieves user details for the currently logged-in user.
+        """
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+        if not user:
+            return jsonify({"msg": "User not found"}), 404
+
+        return jsonify({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email
+        }), 200
+
     # --------------------- PRODUKTY ---------------------
     @app.route('/product', methods=['POST'])
     @jwt_required()
