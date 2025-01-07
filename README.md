@@ -22,9 +22,9 @@ województwo/powiat miejsca docelowego transportu)
 
 | ID  | Backend | Web | Mobile |
 |-----|---------|-----|--------|
-| 1   |    +    |     |   +    |
-| 2   |    +    |     |   +    |
-| 3   |    +    |     |        |
+| 1   |    +    |     |    +   |
+| 2   |    +    |     |    +   |
+| 3   |    +    |     |    +   |
 | 4   |    +    |     |        |
 | 5   |    +    |     |        |
 
