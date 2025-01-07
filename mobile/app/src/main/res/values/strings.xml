@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AgroMobile</string>
+    <string name="select_province">Select Province</string>
+    <string name="select_transport_type">Select Transport Type</string>
+</resources>
