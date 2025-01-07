@@ -1,0 +1,6 @@
+Flask
+flask-jwt-extended
+gunicorn
+SQLAlchemy
+python-dotenv
+Flask-SQLAlchemy==3.1.1
