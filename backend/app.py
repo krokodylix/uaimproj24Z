@@ -383,7 +383,8 @@ def create_app(test_config=None):
             "delivery_date": order.delivery_date,
             "address": order.address,
             "transport_type": order.transport_type.value,
-            "province": order.province.value  # Nowe pole
+            "province": order.province.value,  # Nowe pole
+            "total_sum": product.price if product else None
         }), 200
 
     # --------------------- ADMIN RAPORTY ---------------------

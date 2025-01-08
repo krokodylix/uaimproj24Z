@@ -33,5 +33,13 @@
         android:layout_marginTop="8dp"
         android:visibility="gone" />
 
+    <Button
+        android:id="@+id/generateReportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Generate Report"
+        android:visibility="gone"
+        android:layout_marginTop="16dp" />
+
 
 </LinearLayout>

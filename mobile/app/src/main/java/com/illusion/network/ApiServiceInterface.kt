@@ -21,16 +21,26 @@ interface ApiServiceInterface {
     fun register(@Body registrationRequest: RegistrationRequest): Call<Void>
 
     @POST("/order")
-    fun createOrder(@Body order: Map<String, Any>): Call<Void>
+    fun createOrder(
+        @Header("Authorization") token: String,
+        @Body orderData: Map<String, String>
+    ): Call<Map<String, Any>>
+
+    @GET("/order/{order_id}")
+    fun getOrder(
+        @Header("Authorization") token: String,
+        @Path("order_id") orderId: Int
+    ): Call<OrderSummaryResponse>
 
     @GET("/orders")
     fun getOrders(): Call<List<Order>>
 
     @GET("/admin/report")
-    fun getOrderSummary(
+    fun generateReport(
+        @Header("Authorization") token: String,
         @Query("start_date") startDate: String,
         @Query("end_date") endDate: String
-    ): Call<OrderSummaryResponse>
+    ): Call<Map<String, Any>>
 
     @GET("/product/{product_id}")
     fun getProductDetails(@Path("product_id") productId: Int): Call<ProductDetailResponse>

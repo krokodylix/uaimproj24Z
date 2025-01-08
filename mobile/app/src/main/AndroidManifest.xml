@@ -36,6 +36,15 @@
         <!-- Product Details Activity -->
         <activity android:name="com.illusion.products.ProductDetailActivity" />
 
+        <!-- Order Activity -->
+        <activity android:name="com.illusion.orders.OrderActivity" />
+
+        <!-- Order Summary Activity -->
+        <activity android:name="com.illusion.orders.OrderSummaryActivity" />
+
+        <!-- Report Activity -->
+        <activity android:name="com.illusion.admin.ReportActivity" />
+
     </application>
 
 

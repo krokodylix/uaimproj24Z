@@ -27,4 +27,12 @@
         android:layout_height="wrap_content"
         android:text="Orders Per Province:"
         android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/returnToListButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return to List View"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>

@@ -1,12 +1,15 @@
 package com.illusion.products
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.agromobile.R
+import com.illusion.orders.OrderActivity
 import com.illusion.network.ApiService
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,6 +25,7 @@ class ProductDetailActivity : AppCompatActivity() {
         val productImageView = findViewById<ImageView>(R.id.productImageView)
         val productDescriptionView = findViewById<TextView>(R.id.productDescriptionView)
         val productPriceView = findViewById<TextView>(R.id.productPriceView)
+        val orderButton = findViewById<Button>(R.id.orderButton)
 
         if (productId == -1) {
             Toast.makeText(this, "Invalid product ID", Toast.LENGTH_SHORT).show()
@@ -43,6 +47,13 @@ class ProductDetailActivity : AppCompatActivity() {
                             Glide.with(this@ProductDetailActivity)
                                 .load(product.image)
                                 .into(productImageView)
+                        }
+
+                        // Set up the Order button click listener
+                        orderButton.setOnClickListener {
+                            val intent = Intent(this@ProductDetailActivity, OrderActivity::class.java)
+                            intent.putExtra("product_id", product.id)
+                            startActivity(intent)
                         }
                     }
                 } else {

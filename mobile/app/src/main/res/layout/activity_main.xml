@@ -1,40 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?attr/colorBackground">
 
-    <!-- Added TextView with the required ID -->
     <TextView
-        android:id="@+id/welcomeMessage"
-        android:layout_width="wrap_content"
+        android:id="@+id/usernameTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to Portal Agrarny"
+        android:text="Welcome, User!"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/viewProductsButton"
+    <ListView
+        android:id="@+id/productListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="?attr/colorOnSurface"
+        android:dividerHeight="1dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Products"
-        android:layout_below="@+id/welcomeMessage"
-        android:layout_marginTop="20dp" />
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Logout"
+            style="?attr/buttonStyle" />
+
+        <Button
+            android:id="@+id/addProductButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Product"
+            android:visibility="gone"
+            style="?attr/buttonStyle" />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/myOrdersButton"
+        android:id="@+id/generateReportButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Orders"
-        android:layout_below="@+id/viewProductsButton"
-        android:layout_marginTop="10dp" />
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp" />
-</RelativeLayout>
+        android:text="Generate Report"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        style="?attr/buttonStyle" />
+</LinearLayout>

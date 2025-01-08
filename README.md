@@ -25,8 +25,8 @@ województwo/powiat miejsca docelowego transportu)
 | 1   |    +    |     |    +   |
 | 2   |    +    |     |    +   |
 | 3   |    +    |     |    +   |
-| 4   |    +    |     |        |
-| 5   |    +    |     |        |
+| 4   |    +    |     |    +   |
+| 5   |    +    |     |    +   |
 
 
 # Backend

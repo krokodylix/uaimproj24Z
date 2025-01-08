@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agromobile.R
 import com.illusion.auth.LoginActivity
+import com.illusion.admin.ReportActivity
 import com.illusion.network.ApiService
 import com.illusion.network.UserResponse
 import com.illusion.utils.SessionManager
@@ -28,6 +29,7 @@ class ProductListActivity : AppCompatActivity() {
         val productListView = findViewById<ListView>(R.id.productListView)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         val addProductButton = findViewById<Button>(R.id.addProductButton)
+        val generateReportButton = findViewById<Button>(R.id.generateReportButton)
 
         // Fetch user details to check if admin
         val token = sessionManager.getToken()
@@ -40,14 +42,17 @@ class ProductListActivity : AppCompatActivity() {
                             isAdmin = user.is_admin
                             usernameTextView.text = "Welcome, ${user.username}!"
 
-                            // Show add product button only for admins
+                            // Show admin-specific buttons
                             addProductButton.visibility = if (isAdmin) Button.VISIBLE else Button.GONE
+                            generateReportButton.visibility = if (isAdmin) Button.VISIBLE else Button.GONE
                         }
+                    } else {
+                        Toast.makeText(this@ProductListActivity, "Failed to fetch user details", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    Toast.makeText(this@ProductListActivity, "Failed to fetch user details", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProductListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -93,6 +98,14 @@ class ProductListActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+        }
+
+        // Handle generate report
+        generateReportButton.setOnClickListener {
+            if (isAdmin) {
+                val intent = Intent(this, ReportActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
