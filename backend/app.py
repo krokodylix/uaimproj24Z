@@ -375,6 +375,7 @@ def create_app(test_config=None):
             return jsonify({"msg": "Brak dostępu do tego zamówienia"}), 403
 
         product = Product.query.get(order.product_id)
+        image_base64 = b64encode(product.image).decode('utf-8') if product.image else None
         return jsonify({
             "order_id": order.id,
             "user_id": order.user_id,
@@ -384,7 +385,9 @@ def create_app(test_config=None):
             "address": order.address,
             "transport_type": order.transport_type.value,
             "province": order.province.value,  # Nowe pole
+            "image": image_base64,
             "total_sum": product.price if product else None
+
         }), 200
 
     # --------------------- ADMIN RAPORTY ---------------------

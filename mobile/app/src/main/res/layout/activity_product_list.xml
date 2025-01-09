@@ -13,17 +13,18 @@
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Products:"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
     <ListView
         android:id="@+id/productListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout" />
 
     <Button
         android:id="@+id/addProductButton"
@@ -38,8 +39,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Generate Report"
-        android:visibility="gone"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
 
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

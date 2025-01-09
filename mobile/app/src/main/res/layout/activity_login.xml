@@ -3,12 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
+    android:gravity="center"
     android:background="?attr/colorBackground">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome Back!"
+        android:text="Welcome to AgroX!"
         android:textSize="24sp"
         android:textColor="?attr/colorOnBackground"
         android:gravity="center"

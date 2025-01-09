@@ -1,17 +1,21 @@
 package com.illusion.admin
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agromobile.R
 import com.illusion.network.ApiService
 import com.illusion.utils.SessionManager
+import java.text.SimpleDateFormat
+import java.util.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ReportActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +28,22 @@ class ReportActivity : AppCompatActivity() {
         val generateReportButton = findViewById<Button>(R.id.generateReportButton)
         val reportResultTextView = findViewById<TextView>(R.id.reportResultTextView)
 
+        // Date picker for start date
+        startDateInput.setOnClickListener {
+            showDatePickerDialog { date -> startDateInput.setText(date) }
+        }
+
+        // Date picker for end date
+        endDateInput.setOnClickListener {
+            showDatePickerDialog { date -> endDateInput.setText(date) }
+        }
+
         generateReportButton.setOnClickListener {
             val startDate = startDateInput.text.toString()
             val endDate = endDateInput.text.toString()
 
             if (startDate.isBlank() || endDate.isBlank()) {
-                Toast.makeText(this, "Please enter valid dates", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select valid dates", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -60,5 +74,20 @@ class ReportActivity : AppCompatActivity() {
                     })
             }
         }
+    }
+
+    private fun showDatePickerDialog(onDateSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(selectedYear, selectedMonth, selectedDay)
+            onDateSelected(dateFormat.format(selectedDate.time))
+        }, year, month, day)
+
+        datePickerDialog.show()
     }
 }

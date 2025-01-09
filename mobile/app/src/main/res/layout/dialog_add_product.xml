@@ -17,4 +17,19 @@
         android:layout_height="wrap_content"
         android:hint="Price"
         android:inputType="numberDecimal" />
+
+    <ImageView
+        android:id="@+id/productImagePreview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Product Image Preview" />
+
+    <Button
+        android:id="@+id/selectImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Image" />
+
 </LinearLayout>

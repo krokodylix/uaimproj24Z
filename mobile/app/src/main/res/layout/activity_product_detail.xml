@@ -5,41 +5,42 @@
     android:background="@color/white">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/productImageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Product Image"
-            android:layout_marginBottom="16dp" />
+            android:contentDescription="@string/product_image" />
 
         <TextView
             android:id="@+id/productDescriptionView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product Description"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/productPriceView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Price: 0 PLN"
-            android:textSize="18sp"
-            android:textColor="@color/gray_700"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginTop="4dp"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/orderButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Order Product"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold" />
+
     </LinearLayout>
+
 </ScrollView>

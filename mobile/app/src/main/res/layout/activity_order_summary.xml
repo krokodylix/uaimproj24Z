@@ -1,38 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="?attr/colorBackground">
 
-    <TextView
-        android:id="@+id/totalOrders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Orders: 0"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/totalSum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Sum: 0.0 PLN"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/ordersPerProvince"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Orders Per Province:"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/returnToListButton"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Return to List View"
-        android:layout_marginTop="16dp" />
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/productImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/product_image" />
+
+        <!-- Product Description -->
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:text="Product Description" />
+
+        <!-- Order ID -->
+        <TextView
+            android:id="@+id/orderIdTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"
+            android:text="Id: " />
+
+        <!-- Total Sum -->
+        <TextView
+            android:id="@+id/totalSumTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:text="Total Sum: " />
+
+        <!-- Delivery Details -->
+        <TextView
+            android:id="@+id/deliveryDetailsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:text="Delivery Details: " />
+
+        <!-- Return to List Button -->
+        <Button
+            android:id="@+id/returnToListButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return to List View"
+            android:layout_marginTop="16dp"
+            style="?attr/buttonStyle" />
+
+    </LinearLayout>
+</ScrollView>

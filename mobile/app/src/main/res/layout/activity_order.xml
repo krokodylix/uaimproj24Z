@@ -1,52 +1,89 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="?attr/colorBackground">
 
-    <EditText
-        android:id="@+id/productInput"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Product ID"
-        android:inputType="number"
-        android:textColor="?attr/colorOnBackground" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/deliveryDateInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Delivery Date (YYYY-MM-DD)"
-        android:inputType="date"
-        android:layout_marginTop="16dp"
-        android:textColor="?attr/colorOnBackground" />
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/productImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/product_image" />
 
-    <EditText
-        android:id="@+id/addressInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Delivery Address"
-        android:layout_marginTop="16dp"
-        android:textColor="?attr/colorOnBackground" />
+        <!-- Product Description -->
+        <TextView
+            android:id="@+id/productDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:text="Product Description" />
 
-    <Spinner
-        android:id="@+id/provinceInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        <!-- Product ID -->
+        <TextView
+            android:id="@+id/productIdText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"
+            android:text="Id: " />
 
-    <Spinner
-        android:id="@+id/transportTypeInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        <!-- Product Price -->
+        <TextView
+            android:id="@+id/productPriceText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:text="Price: " />
 
-    <Button
-        android:id="@+id/placeOrderButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Place Order"
-        android:layout_marginTop="16dp"
-        style="?attr/buttonStyle" />
-</LinearLayout>
+        <!-- Delivery Date Input -->
+        <EditText
+            android:id="@+id/deliveryDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Delivery Date"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginTop="16dp" />
+
+        <!-- Delivery Address -->
+        <EditText
+            android:id="@+id/addressInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Delivery Address"
+            android:layout_marginTop="16dp" />
+
+        <!-- Province Spinner -->
+        <Spinner
+            android:id="@+id/provinceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <!-- Transport Type Spinner -->
+        <Spinner
+            android:id="@+id/transportTypeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <!-- Place Order Button -->
+        <Button
+            android:id="@+id/placeOrderButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Place Order"
+            android:layout_marginTop="16dp"
+            style="?attr/buttonStyle" />
+    </LinearLayout>
+</ScrollView>

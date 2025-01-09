@@ -2,22 +2,29 @@ package com.illusion.products
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agromobile.R
 import com.illusion.auth.LoginActivity
-import com.illusion.admin.ReportActivity
 import com.illusion.network.ApiService
 import com.illusion.network.UserResponse
 import com.illusion.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 
 class ProductListActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private var isAdmin: Boolean = false
+    private val PICK_IMAGE_REQUEST = 1
+    private var selectedImageBase64: String? = null
+    private var dialogProductImagePreview: ImageView? = null // Track the dialog's ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +36,7 @@ class ProductListActivity : AppCompatActivity() {
         val productListView = findViewById<ListView>(R.id.productListView)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         val addProductButton = findViewById<Button>(R.id.addProductButton)
-        val generateReportButton = findViewById<Button>(R.id.generateReportButton)
 
-        // Fetch user details to check if admin
         val token = sessionManager.getToken()
         if (token != null) {
             ApiService.instance.getUserDetails("Bearer $token").enqueue(object : Callback<UserResponse> {
@@ -42,33 +47,26 @@ class ProductListActivity : AppCompatActivity() {
                             isAdmin = user.is_admin
                             usernameTextView.text = "Welcome, ${user.username}!"
 
-                            // Show admin-specific buttons
                             addProductButton.visibility = if (isAdmin) Button.VISIBLE else Button.GONE
-                            generateReportButton.visibility = if (isAdmin) Button.VISIBLE else Button.GONE
                         }
-                    } else {
-                        Toast.makeText(this@ProductListActivity, "Failed to fetch user details", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    Toast.makeText(this@ProductListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProductListActivity, "Failed to fetch user details", Toast.LENGTH_SHORT).show()
                 }
             })
         }
 
-        // Fetch products from backend
         ApiService.instance.getAllProducts().enqueue(object : Callback<List<ProductResponse>> {
             override fun onResponse(call: Call<List<ProductResponse>>, response: Response<List<ProductResponse>>) {
                 if (response.isSuccessful) {
                     val products = response.body() ?: emptyList()
 
-                    // Populate ListView
                     val productDescriptions = products.map { "${it.description} - ${it.price} PLN" }
                     val adapter = ArrayAdapter(this@ProductListActivity, android.R.layout.simple_list_item_1, productDescriptions)
                     productListView.adapter = adapter
 
-                    // Handle product selection
                     productListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                         val selectedProduct = products[position]
                         val intent = Intent(this@ProductListActivity, ProductDetailActivity::class.java)
@@ -85,27 +83,17 @@ class ProductListActivity : AppCompatActivity() {
             }
         })
 
-        // Handle add product
         addProductButton.setOnClickListener {
             if (isAdmin) {
                 showAddProductDialog()
             }
         }
 
-        // Handle logout
         logoutButton.setOnClickListener {
             sessionManager.clearSession()
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-        }
-
-        // Handle generate report
-        generateReportButton.setOnClickListener {
-            if (isAdmin) {
-                val intent = Intent(this, ReportActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
 
@@ -113,6 +101,13 @@ class ProductListActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_product, null)
         val descriptionInput = dialogView.findViewById<EditText>(R.id.productDescriptionInput)
         val priceInput = dialogView.findViewById<EditText>(R.id.productPriceInput)
+        dialogProductImagePreview = dialogView.findViewById(R.id.productImagePreview) // Track the dialog's ImageView
+        val selectImageButton = dialogView.findViewById<Button>(R.id.selectImageButton)
+
+        selectImageButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
 
         AlertDialog.Builder(this)
             .setTitle("Add New Product")
@@ -126,27 +121,41 @@ class ProductListActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
 
-                // Call API to add product
                 val token = sessionManager.getToken()
                 if (token != null) {
-                    ApiService.instance.addProduct("Bearer $token", Product(description = description, price = price, image = null))
-                        .enqueue(object : Callback<Void> {
-                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                                if (response.isSuccessful) {
-                                    Toast.makeText(this@ProductListActivity, "Product added successfully", Toast.LENGTH_SHORT).show()
-                                    recreate() // Refresh the activity
-                                } else {
-                                    Toast.makeText(this@ProductListActivity, "Failed to add product", Toast.LENGTH_SHORT).show()
-                                }
+                    val product = Product(description = description, price = price, image = selectedImageBase64)
+                    ApiService.instance.addProduct("Bearer $token", product).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@ProductListActivity, "Product added successfully", Toast.LENGTH_SHORT).show()
+                                recreate()
+                            } else {
+                                Toast.makeText(this@ProductListActivity, "Failed to add product", Toast.LENGTH_SHORT).show()
                             }
+                        }
 
-                            override fun onFailure(call: Call<Void>, t: Throwable) {
-                                Toast.makeText(this@ProductListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        })
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(this@ProductListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            val imageUri = data.data
+            val imageStream = contentResolver.openInputStream(imageUri!!)
+            val bitmap = BitmapFactory.decodeStream(imageStream)
+            val outputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            val imageBytes = outputStream.toByteArray()
+            selectedImageBase64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+
+            dialogProductImagePreview?.setImageBitmap(bitmap)
+        }
     }
 }
