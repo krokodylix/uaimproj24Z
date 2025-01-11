@@ -10,6 +10,7 @@ import android.util.Base64
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agromobile.R
+import com.illusion.admin.ReportActivity
 import com.illusion.auth.LoginActivity
 import com.illusion.network.ApiService
 import com.illusion.network.UserResponse
@@ -24,7 +25,7 @@ class ProductListActivity : AppCompatActivity() {
     private var isAdmin: Boolean = false
     private val PICK_IMAGE_REQUEST = 1
     private var selectedImageBase64: String? = null
-    private var dialogProductImagePreview: ImageView? = null // Track the dialog's ImageView
+    private var dialogProductImagePreview: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class ProductListActivity : AppCompatActivity() {
         val productListView = findViewById<ListView>(R.id.productListView)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         val addProductButton = findViewById<Button>(R.id.addProductButton)
+        val generateReportButton = findViewById<Button>(R.id.generateReportButton)
 
         val token = sessionManager.getToken()
         if (token != null) {
@@ -48,6 +50,7 @@ class ProductListActivity : AppCompatActivity() {
                             usernameTextView.text = "Welcome, ${user.username}!"
 
                             addProductButton.visibility = if (isAdmin) Button.VISIBLE else Button.GONE
+                            generateReportButton.visibility = if (isAdmin) Button.VISIBLE else Button.GONE
                         }
                     }
                 }
@@ -95,6 +98,15 @@ class ProductListActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+
+        generateReportButton.setOnClickListener {
+            if (isAdmin) {
+                val intent = Intent(this, ReportActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+
     }
 
     private fun showAddProductDialog() {
