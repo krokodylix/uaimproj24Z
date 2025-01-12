@@ -133,8 +133,6 @@ def test_admin_login_success(client):
         "email": "admin@example.com",
         "password": "secret"
     })
-    print('dupa')
-    print(response.data)
     assert response.status_code == 200
     data = response.get_json()
     assert "access_token" in data
