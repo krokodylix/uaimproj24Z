@@ -16,17 +16,28 @@ transportu (flota ciężarówek),
 5. Generowanie raportów per okres (liczba transportów, wartość transportu, 
 województwo/powiat miejsca docelowego transportu)
 
+
+# Docker
+
+Docker uruchamia backend w python Flask na porcie 5000 oraz aplikację webową javascript React na porcie 3000.
+
+```sh
+docker-compose up --build
+```
+
+
+
 ## todo
 
 #### + = done
 
 | ID  | Backend | Web | Mobile |
 |-----|---------|-----|--------|
-| 1   |    +    |     |    +   |
-| 2   |    +    |     |    +   |
-| 3   |    +    |     |    +   |
-| 4   |    +    |     |    +   |
-| 5   |    +    |     |    +   |
+| 1   |    +    |  +  |    +   |
+| 2   |    +    |  +  |    +   |
+| 3   |    +    |  +  |    +   |
+| 4   |    +    |  +  |    +   |
+| 5   |    +    |  +  |    +   |
 
 
 # Backend
@@ -95,9 +106,6 @@ class TransportType(Enum):
     TRUCK = "TRUCK"
     COURIER = "COURIER"
 ```
-
-
-
 
 # Web
 
