@@ -1,7 +1,6 @@
-import './App.css';
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
-import { client } from './Services'
+import { client, doLogin } from './Services'
 import { useAuth } from './AuthContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 
@@ -22,10 +21,7 @@ const Login = () => {
 		setError(null);
 
 		try {
-			const response = await client.post('login', {
-				email,
-				password,
-			});
+			const response = await doLogin(email, password);
 
 			const { access_token } = response.data;
 			auth.setToken(access_token)
@@ -44,9 +40,9 @@ const Login = () => {
 	};
 
 	return (
-		<Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-			<Row className="w-100">
-				<Col>
+		<Container className='mt-5'>
+			<Row className="justify-content-center">
+				<Col md={6}>
 					<h2 className="text-center mb-4">Login</h2>
 
 					{error && <Alert variant="danger">{error}</Alert>}
@@ -74,10 +70,14 @@ const Login = () => {
 							/>
 						</Form.Group>
 
-						<Button variant="primary" type="submit" className="w-100" disabled={loading}>
-							{loading ? 'Logging in...' : 'Login'}
+						<Button
+							variant="primary"
+							type="submit"
+							className="w-100 mt-5"
+							disabled={loading}
+						>
+							Zaloguj
 						</Button>
-
 					</Form>
 				</Col>
 			</Row>

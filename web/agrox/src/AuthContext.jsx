@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 	const [token, setToken] = useState(null);
 	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true); 
+	const [loading, setLoading] = useState(true);
 	const nav = useNavigate();
 
 	useEffect(() => {
@@ -17,25 +17,25 @@ export const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		(async () => {
-			if(token) {
+			if (token) {
 				try {
-					setLoading(true); 
-					const response = await getUser({token})
+					setLoading(true);
+					const response = await getUser({ token })
 					setUser(response.data);
-					setLoading(false); 
+					setLoading(false);
 				} catch (error) {
-					if(error.response) {
+					if (error.response) {
 						setUser()
-						setLoading(false); 
+						setLoading(false);
 					} else {
 						throw error
 					}
 				}
 			} else {
 				setUser()
-				setLoading(false); 
+				setLoading(false);
 			}
-		}) ();
+		})();
 	}, [token]);
 
 	const setTokenExternal = (token) => {

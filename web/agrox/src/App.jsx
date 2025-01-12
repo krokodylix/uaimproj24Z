@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
 import Login from './Login'
 import ProductList from './ProductList'
 import { AuthProvider } from './AuthContext';
 import NavBar from './NavBar';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Register from './Register';
 import ProductAdd from './ProductAdd';
 import ProductEdit from './ProductEdit';
