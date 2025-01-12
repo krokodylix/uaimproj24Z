@@ -31,7 +31,7 @@ const SalesReport = () => {
 	};
 
 	return (
-		<Container>
+		<Container className='mt-5'>
 			<Row className="justify-content-center">
 				<Col md={6}>
 					<h2>Generate Sales Report</h2>
@@ -67,7 +67,6 @@ const SalesReport = () => {
 								<Card.Title>Raport</Card.Title>
 								<Card.Text><strong> Ilość zamówień </strong> {report.total_orders}</Card.Text>
 								<Card.Text><strong> Suma zamówień </strong> ${report.total_sum.toFixed(2)}</Card.Text>
-
 								<h5>Ilość zamówień w województwach:</h5>
 								<ul>
 									{Object.entries(report.orders_per_province).map(([province, cnt]) => {

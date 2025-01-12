@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router';
 import { useAuth } from './AuthContext';
 import { districts, deliveryMethods } from './EnumValues'
 import { addOrder } from './Services';
@@ -34,7 +34,7 @@ const OrderForm = () => {
 					<Card>
 						<Card.Body>
 							<Card.Title>Product Details</Card.Title>
-							<Card.Img variant="top" src={`data:image/png;base64,${product.image}`} alt="" />
+							<Card.Img variant="top" src={`data:image/png;base64,${product.image}`} alt="" style={{ maxHeight: '256px', objectFit: 'contain' }} />
 							<Card.Text><strong>Description:</strong> {product.description}</Card.Text>
 							<Card.Text><strong>Price:</strong> ${product.price}</Card.Text>
 						</Card.Body>
@@ -47,7 +47,7 @@ const OrderForm = () => {
 						<Form.Group controlId="district">
 							<Form.Label>Województwo</Form.Label>
 							<Form.Control as="select" value={district} onChange={(e) => setDistrict(e.target.value)} required>
-								<option value="">Select District</option>
+								<option value=""> Wybierz województwo </option>
 								{districts.map((district, index) => (
 									<option key={index} value={district}>{district}</option>
 								))}
@@ -65,10 +65,10 @@ const OrderForm = () => {
 						</Form.Group>
 
 						<Form.Group controlId="address">
-							<Form.Label>Delivery Address</Form.Label>
+							<Form.Label>Adres dostawy</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter your delivery address"
+								placeholder="Wpisz adres dostawy"
 								value={address}
 								onChange={(e) => setAddress(e.target.value)}
 								required
@@ -76,7 +76,7 @@ const OrderForm = () => {
 						</Form.Group>
 
 						<Form.Group controlId="deliveryDate">
-							<Form.Label>Choose Delivery Date</Form.Label>
+							<Form.Label>Data dostawy</Form.Label>
 							<Form.Control
 								type="date"
 								value={deliveryDate}
