@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agrox-backend
+    ports:
+      - "5000:5000"  # Mapowanie portu backendu
+    environment:
+      - FLASK_ENV=development  # Możesz dodać więcej zmiennych środowiskowych tutaj
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./web/agrox
+      dockerfile: Dockerfile
+    container_name: agrox-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    stdin_open: true
+    tty: true

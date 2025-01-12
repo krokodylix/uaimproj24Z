@@ -26,7 +26,7 @@ EXPOSE 5000
 
 # Ustaw zmienne środowiskowe z pliku .env (opcjonalnie)
 # Możesz też przekazywać zmienne podczas uruchamiania kontenera
-COPY .env .env
+#COPY .env .env
 
 # Komenda do uruchomienia aplikacji za pomocą Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]

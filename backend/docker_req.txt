@@ -4,3 +4,5 @@ gunicorn
 SQLAlchemy
 python-dotenv
 Flask-SQLAlchemy==3.1.1
+flask_cors
+PyJWT==2.9.0
