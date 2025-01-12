@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useAuth } from './AuthContext';
 import ProductForm from './ProductForm';
 import { addProduct } from './Services';

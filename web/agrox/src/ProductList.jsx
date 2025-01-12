@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useAuth } from "./AuthContext";
 import { delProduct, getProducts } from "./Services";
 
@@ -36,14 +36,14 @@ const ProductView = ({ product, isAdmin, onListUpdated }) => {
 				<div className="d-flex justify-content-between align-items-center">
 					<span className="h4">{product.price}</span>
 					<div>
-						<Button variant="primary" onClick={handleOrder}> Add to Cart</Button>
+						<Button variant="primary" onClick={handleOrder}> Zamów </Button>
 						{isAdmin &&
 							<>
 								<Button variant="secondary" onClick={handleEdit} className="ml-4">
-									Edit
+									Edytuj
 								</Button>
 								<Button variant="danger" onClick={handleDelete} className="ml-4">
-									Delete
+									Usuń
 								</Button>
 							</>
 						}

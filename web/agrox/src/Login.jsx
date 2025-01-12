@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import { client, doLogin } from './Services'
 import { useAuth } from './AuthContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router';
 
 
 const Login = () => {
