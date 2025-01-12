@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { doRegister } from './Services';
 
 const Register = () => {
-	// Separate state variables for each form field
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -30,30 +29,24 @@ const Register = () => {
 				setError('An error occurred. Please try again.');
 			}
 		}
-		// try {
-
-		// } catch (err) {
-		// 	setError(err.message);
-		// } finally {
-		// 	setLoading(false);
-		// }
 	};
 
 	return (
-		<Container className="mt-5">
+		<Container className='mt-5'>
 			<Row className="justify-content-center">
 				<Col md={6}>
+					<h2 className="text-center">Rejestracja</h2>
+
 					{error && <Alert variant="danger">{error}</Alert>}
 
-					<h2 className="mb-4 text-center">User Registration</h2>
-					<Form onSubmit={handleSubmit}>
+					<Form onSubmit={handleSubmit} className='mt-5'>
 						<Form.Group controlId="formUsername">
 							<Form.Label>Username</Form.Label>
 							<Form.Control
 								type="text"
 								value={username}
 								onChange={(e) => setUsername(e.target.value)}
-								placeholder="Enter your username"
+								placeholder="Wpisz nazwę użytkownika"
 								required
 							/>
 						</Form.Group>
@@ -64,7 +57,7 @@ const Register = () => {
 								type="email"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
-								placeholder="Enter your email"
+								placeholder="Wpisz email"
 								required
 							/>
 						</Form.Group>
@@ -75,7 +68,7 @@ const Register = () => {
 								type="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								placeholder="Enter your password"
+								placeholder="Wpisz hasło"
 								required
 							/>
 						</Form.Group>
@@ -83,10 +76,10 @@ const Register = () => {
 						<Button
 							variant="primary"
 							type="submit"
-							className="w-100"
+							className="w-100 mt-5"
 							disabled={loading}
 						>
-							{loading ? 'Registering...' : 'Register'}
+							Zarejestruj
 						</Button>
 					</Form>
 				</Col>

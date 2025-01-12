@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Container } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { delProduct, getProducts } from "./Services";
 
-const ProductView = ( {product, isAdmin, onListUpdated} ) => {
+const ProductView = ({ product, isAdmin, onListUpdated }) => {
 	const nav = useNavigate()
 	const auth = useAuth()
 
@@ -25,31 +25,33 @@ const ProductView = ( {product, isAdmin, onListUpdated} ) => {
 	}
 
 
-	return <Card style={{ width: '24rem'}}>
-		<Card.Img variant="top" src={`data:image/png;base64,${product.image}`} alt="" />
-		<Card.Body>
-			<Card.Title>Produkt {product.id}</Card.Title>
-			<Card.Text>
-				{product.description}
-			</Card.Text>
-			<div className="d-flex justify-content-between align-items-center">
-				<span className="h4">${product.price}</span>
-				<div className="d-flex">
-					<Button variant="primary" onClick={handleOrder}> Add to Cart</Button>
-					{isAdmin &&
-						<>
-							<Button variant="secondary" onClick={handleEdit} className="ml-2">
-								Edit
-							</Button>
-							<Button variant="danger" onClick={handleDelete} className="ml-2">
-								Delete
-							</Button>
-						</>
-					}
+	return <Col key={product.id} sm={12} md={6} lg={4} className="mb-4">
+		<Card style={{ width: '24rem' }}>
+			<Card.Img variant="top" src={`data:image/png;base64,${product.image}`} alt="" style={{ maxHeight: '256px', objectFit: 'cover' }} />
+			<Card.Body>
+				<Card.Title>Produkt {product.id}</Card.Title>
+				<Card.Text>
+					{product.description}
+				</Card.Text>
+				<div className="d-flex justify-content-between align-items-center">
+					<span className="h4">{product.price}</span>
+					<div>
+						<Button variant="primary" onClick={handleOrder}> Add to Cart</Button>
+						{isAdmin &&
+							<>
+								<Button variant="secondary" onClick={handleEdit} className="ml-4">
+									Edit
+								</Button>
+								<Button variant="danger" onClick={handleDelete} className="ml-4">
+									Delete
+								</Button>
+							</>
+						}
+					</div>
 				</div>
-			</div>
-		</Card.Body>
-	</Card>
+			</Card.Body>
+		</Card>
+	</Col>
 }
 
 const ProductList = () => {
@@ -57,20 +59,22 @@ const ProductList = () => {
 	const auth = useAuth()
 
 	const onListUpdated = () => {
-		( async () =>  {
+		(async () => {
 			const response = await getProducts(auth)
 			setProducts(response.data);
-		} ) ();
+		})();
 	};
 
 	useEffect(onListUpdated, [])
 
-	if(!products) {
+	if (!products) {
 		return
 	}
 
 	return <Container>
-		{products.map(p => <ProductView product = {p} isAdmin = {auth.is_admin()} onListUpdated = {onListUpdated}/>)}
+		<Row>
+		{products.map(p => <ProductView product={p} isAdmin={auth.is_admin()} onListUpdated={onListUpdated} />)}
+		</Row>
 	</Container>
 }
 
