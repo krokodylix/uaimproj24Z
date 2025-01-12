@@ -1,6 +1,8 @@
 # app.py
 
 import os
+
+from flask_cors import CORS
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from flask_jwt_extended import (
@@ -19,7 +21,7 @@ load_dotenv()
 
 def create_app(test_config=None):
     app = Flask(__name__)
-
+    CORS(app)
     # Konfiguracja bazy danych
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydb.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
